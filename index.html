@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeVerse Academy</title>
+    <link rel="icon" href="https://via.placeholder.com/32" type="image/png">
+    <style>
+        :root {
+            --primary: #3B2F5B; /* Deep lavender */
+            --secondary: #8A4FFF; /* Soft purple */
+            --accent: #FFB3E6; /* Pastel pink */
+            --dark: #1F1A38; /* Dark indigo */
+            --light: #F9F6FF; /* Off-white with lavender tint */
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark), #2C2552);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=10') no-repeat center/cover;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: rgba(31, 26, 56, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(138, 79, 255, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(138, 79, 255, 0.4);
+            transform: perspective(600px) translateZ(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: perspective(600px) translateZ(30px);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 17px;
+            position: relative;
+            padding: 6px 0;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--accent);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: url('https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') no-repeat center/cover;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(31, 26, 56, 0.6);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            line-height: 1.1;
+            background: linear-gradient(to right, var(--light), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transform: perspective(1000px) rotateX(0deg);
+            transition: transform 0.5s ease;
+        }
+        
+        .hero h1:hover {
+            transform: perspective(1000px) rotateX(10deg);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 35px;
+            color: rgba(249, 246, 255, 0.9);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 14px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+            z-index: -1;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            color: var(--light);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--light);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(138, 79, 255, 0.15);
+            transform: translateY(-5px);
+        }
+        
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 60px;
+            text-align: center;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+        }
+        
+        .topics-section {
+            padding: 100px 0;
+        }
+        
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 35px;
+            margin-bottom: 60px;
+        }
+        
+        .topic-card {
+            background: rgba(31, 26, 56, 0.85);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(138, 79, 255, 0.3);
+            transform: perspective(1200px) rotateX(0deg) rotateY(0deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .topic-card:hover {
+            transform: perspective(1200px) rotateX(8deg) rotateY(8deg) translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(138, 79, 255, 0.6);
+        }
+        
+        .topic-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(138, 79, 255, 0.3);
+        }
+        
+        .topic-header {
+            padding: 25px;
+            background: linear-gradient(45deg, rgba(59, 47, 91, 0.85), rgba(31, 26, 56, 0.85));
+            border-bottom: 1px solid rgba(138, 79, 255, 0.3);
+        }
+        
+        .topic-header h3 {
+            font-size: 1.6rem;
+            margin-bottom: 12px;
+            color: var(--light);
+        }
+        
+        .topic-body {
+            padding: 25px;
+        }
+        
+        .topic-body p {
+            margin-bottom: 25px;
+            color: rgba(249, 246, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        
+        .video-list {
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 12px;
+        }
+        
+        .video-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .video-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+        }
+        
+        .video-list::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 12px;
+        }
+        
+        .video-item {
+            margin-bottom: 18px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .video-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .video-item a {
+            color: var(--light);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .video-item a:hover {
+            color: var(--accent);
+        }
+        
+        .video-item .icon {
+            margin-right: 12px;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+        
+        .resources-section {
+            padding: 100px 0;
+            background: rgba(31, 26, 56, 0.6);
+            position: relative;
+        }
+        
+        .resources-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(138, 79, 255, 0.15), transparent 70%);
+            z-index: -1;
+        }
+        
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 35px;
+        }
+        
+        .resource-card {
+            background: rgba(31, 26, 56, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(138, 79, 255, 0.3);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            transform: perspective(1200px) rotateX(0deg) rotateY(0deg);
+        }
+        
+        .resource-card:hover {
+            transform: perspective(1200px) rotateX(8deg) rotateY(8deg) translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(138, 79, 255, 0.6);
+        }
+        
+        .resource-card img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .resource-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+            color: var(--light);
+        }
+        
+        .resource-card p {
+            margin-bottom: 25px;
+            color: rgba(249, 246, 255, 0.9);
+            font-size: 1rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+        
+        .resource-card a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card a:hover {
+            color: var(--secondary);
+        }
+        
+        .resource-card a .icon {
+            margin-left: 8px;
+            font-size: 1.1rem;
+        }
+        
+        footer {
+            background: rgba(31, 26, 56, 0.9);
+            padding: 60px 0 30px;
+            border-top: 1px solid rgba(138, 79, 255, 0.3);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-column h4 {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: var(--light);
+            position: relative;
+            padding-bottom: 12px;
+        }
+        
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column ul li a {
+            color: rgba(249, 246, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            color: rgba(249, 246, 255, 0.6);
+            font-size: 1rem;
+        }
+        
+        .creator {
+            display: block;
+            margin-top: 12px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 25px;
+                font-size: 28px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+            }
+            
+            .hero {
+                height: 60vh;
+            }
+            
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resources-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Enhanced 3D Effects */
+        .card-3d {
+            transform-style: preserve-3d;
+            perspective: 1200px;
+        }
+        
+        .floating-element {
+            animation: float 5s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-25px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+        
+        .glow {
+            text-shadow: 0 0 12px rgba(255, 179, 230, 0.6), 0 0 24px rgba(255, 179, 230, 0.4), 0 0 36px rgba(255, 179, 230, 0.2);
+        }
+        
+        .tab-container {
+            margin-bottom: 50px;
+        }
+        
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 35px;
+            justify-content: center;
+        }
+        
+        .tab {
+            padding: 14px 30px;
+            background: rgba(31, 26, 56, 0.85);
+            border: 1px solid rgba(138, 79, 255, 0.4);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--light);
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            border-color: transparent;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .tab:hover:not(.active) {
+            background: rgba(138, 79, 255, 0.25);
+            border-color: rgba(138, 79, 255, 0.6);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">CodeVerse Academy</div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#topics">Topics</a></li>
+                        <li><a href="#resources">Resources</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="glow">Master Programming & AI</h1>
+                <p>Embark on your tech journey with our comprehensive learning platform for programming, AI/ML, cybersecurity, game development, and more. Access curated video tutorials and resources to elevate your skills.</p>
+                <div class="cta-buttons">
+                    <a href="#topics" class="btn btn-primary">Explore Topics</a>
+                    <a href="#resources" class="btn btn-secondary">View Resources</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="topics-section" id="topics">
+        <div class="container">
+            <h2 class="section-title">Learning Paths</h2>
+            
+            <div class="tab-container">
+                <div class="tabs">
+                    <div class="tab active" data-tab="programming">Programming</div>
+                    <div class="tab" data-tab="ai-ml">AI & ML</div>
+                    <div class="tab" data-tab="web-dev">Web Development</div>
+                    <div class="tab" data-tab="cybersecurity">Cybersecurity</div>
+                    <div class="tab" data-tab="game-dev">Game Development</div>
+                    <div class="tab" data-tab="ui-ux">UI/UX Design</div>
+                </div>
+                
+                <div class="tab-content active" id="programming">
+                    <div class="topics-grid">
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Python Programming">
+                            <div class="topic-header">
+                                <h3>Python Programming</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Master Python programming from basics to advanced concepts including data structures, algorithms, and practical applications.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=_uQrJ0TkZlc" target="_blank">
+                                            <span class="icon">▶️</span> Python Tutorial for Beginners - Full Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=rfscVS0vtbw" target="_blank">
+                                            <span class="icon">▶️</span> Learn Python - Full Course for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=8DvywoWv6fI" target="_blank">
+                                            <span class="icon">▶️</span> Python for Everybody - Full University Python Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=HGOBQPFzWKo" target="_blank">
+                                            <span class="icon">▶️</span> Python OOP Tutorial - Object Oriented Programming
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Java Programming">
+                            <div class="topic-header">
+                                <h3>Java Programming</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn Java programming from fundamentals to enterprise applications, including OOP concepts and frameworks.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=grEKMHGYyns" target="_blank">
+                                            <span class="icon">▶️</span> Java Tutorial for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=eIrMbAQSU34" target="_blank">
+                                            <span class="icon">▶️</span> Java Programming - Complete Tutorial
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=RRubcjpTkks" target="_blank">
+                                            <span class="icon">▶️</span> Java OOPS Concepts
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=Ae-r8hsbPUo" target="_blank">
+                                            <span class="icon">▶️</span> Spring Boot Tutorial for Beginners
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1509967416639-3354b4e1e5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="C/C++ Programming">
+                            <div class="topic-header">
+                                <h3>C/C++ Programming</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Dive into C and C++ programming languages, essential for system programming, game development, and performance-critical applications.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=KJgsSFOSQv0" target="_blank">
+                                            <span class="icon">▶️</span> C Programming Tutorial for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=vLnPwxZdW4Y" target="_blank">
+                                            <span class="icon">▶️</span> C++ Tutorial for Beginners - Full Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=8jLOx1hD3_o" target="_blank">
+                                            <span class="icon">▶️</span> C++ Programming Course - Beginner to Advanced
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=mUQZ1qmKlLY" target="_blank">
+                                            <span class="icon">▶️</span> Data Structures in C++
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="ai-ml">
+                    <div class="topics-grid">
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Machine Learning">
+                            <div class="topic-header">
+                                <h3>Machine Learning Fundamentals</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn the core concepts of machine learning, including supervised and unsupervised learning, algorithms, and practical applications.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=jGwO_UgTS7I" target="_blank">
+                                            <span class="icon">▶️</span> Machine Learning Course for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=NWONeJKn6kc" target="_blank">
+                                            <span class="icon">▶️</span> Machine Learning Full Course - Learn ML Algorithms
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=gmvvaobm7eQ" target="_blank">
+                                            <span class="icon">▶️</span> Supervised vs Unsupervised Learning
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=7eh4d6sabA0" target="_blank">
+                                            <span class="icon">▶️</span> Support Vector Machines - The Math of Intelligence
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Deep Learning">
+                            <div class="topic-header">
+                                <h3>Deep Learning & Neural Networks</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Explore deep learning concepts, neural network architectures, and frameworks like TensorFlow and PyTorch.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=aircAruvnKk" target="_blank">
+                                            <span class="icon">▶️</span> Neural Networks Explained
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=tPYj3fFJGjk" target="_blank">
+                                            <span class="icon">▶️</span> Deep Learning Crash Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=zUCoxhExe0o" target="_blank">
+                                            <span class="icon">▶️</span> TensorFlow 2.0 Complete Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=GIsg-ZUy0MY" target="_blank">
+                                            <span class="icon">▶️</span> PyTorch for Deep Learning - Full Course
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1509967416639-3354b4e1e5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="NLP">
+                            <div class="topic-header">
+                                <h3>Natural Language Processing</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn how to process and analyze human language data, build chatbots, and implement text classification systems.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=FLZvOKSCkxY" target="_blank">
+                                            <span class="icon">▶️</span> NLP Tutorial - Natural Language Processing
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=X2vAabgKiuM" target="_blank">
+                                            <span class="icon">▶️</span> BERT Explained - State of the Art NLP Model
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=oWJe2T29kAo" target="_blank">
+                                            <span class="icon">▶️</span> Chatbot with Python and Deep Learning
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=QpzMWQvxXWk" target="_blank">
+                                            <span class="icon">▶️</span> Text Classification with Python
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="web-dev">
+                    <div class="topics-grid">
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Frontend Development">
+                            <div class="topic-header">
+                                <h3>Frontend Development</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Master HTML, CSS, JavaScript and modern frontend frameworks to build responsive and interactive web applications.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=qz0aGYrrlhU" target="_blank">
+                                            <span class="icon">▶️</span> HTML & CSS Full Course - Beginner to Pro
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=PkZNo7MFNFg" target="_blank">
+                                            <span class="icon">▶️</span> JavaScript - Full Course for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=w7ejDZ8SWv8" target="_blank">
+                                            <span class="icon">▶️</span> React JS Crash Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=qZXt1Aom3Cs" target="_blank">
+                                            <span class="icon">▶️</span> Vue.js Course for Beginners
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Backend Development">
+                            <div class="topic-header">
+                                <h3>Backend Development</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn server-side programming, databases, APIs, and how to build robust backend systems for web applications.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=fBNz5xF-Kx4" target="_blank">
+                                            <span class="icon">▶️</span> Node.js Crash Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=Oe421EPjeBE" target="_blank">
+                                            <span class="icon">▶️</span> Node.js and Express.js - Full Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=7S_tz1z_5bA" target="_blank">
+                                            <span class="icon">▶️</span> MySQL Database Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=2jqok-WgelI" target="_blank">
+                                            <span class="icon">▶️</span> MongoDB Complete Tutorial
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1509967416639-3354b4e1e5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Full Stack Development">
+                            <div class="topic-header">
+                                <h3>Full Stack Development</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Combine frontend and backend skills to build complete web applications from scratch.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=nu_pCVPKzTk" target="_blank">
+                                            <span class="icon">▶️</span> Full Stack Web Development for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=mrHNSanmqQ4" target="_blank">
+                                            <span class="icon">▶️</span> MERN Stack Course - MongoDB, Express, React, Node
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=a_7Z7C_JCyo" target="_blank">
+                                            <span class="icon">▶️</span> Django Web Framework - Full Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=3aGSqasVPsI" target="_blank">
+                                            <span class="icon">▶️</span> Ruby on Rails Crash Course
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="cybersecurity">
+                    <div class="topics-grid">
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Ethical Hacking">
+                            <div class="topic-header">
+                                <h3>Ethical Hacking</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn ethical hacking techniques, penetration testing, and how to identify and fix security vulnerabilities.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=3Kq1MIfTWCE" target="_blank">
+                                            <span class="icon">▶️</span> Ethical Hacking Full Course - Learn Ethical Hacking
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=dz7Ntp7KQGA" target="_blank">
+                                            <span class="icon">▶️</span> Penetration Testing - Complete Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=qwA6MmbeGNo" target="_blank">
+                                            <span class="icon">▶️</span> Kali Linux Tutorial for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=lZAoFs75_cs" target="_blank">
+                                            <span class="icon">▶️</span> Web Application Penetration Testing
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Network Security">
+                            <div class="topic-header">
+                                <h3>Network Security</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Understand network security principles, protocols, and how to protect networks from various attacks.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=qiQR5rTSshw" target="_blank">
+                                            <span class="icon">▶️</span> Network Security - Full Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=E03gh1huvW4" target="_blank">
+                                            <span class="icon">▶️</span> Wireshark Tutorial for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=xdQ9sgpkrX8" target="_blank">
+                                            <span class="icon">▶️</span> Firewall Explained - Network Security
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=NHAueP2rCl0" target="_blank">
+                                            <span class="icon">▶️</span> VPN Explained - Virtual Private Networks
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1509967416639-3354b4e1e5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Cryptography">
+                            <div class="topic-header">
+                                <h3>Cryptography</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn about encryption, decryption, cryptographic algorithms, and secure communication protocols.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=6_Cxj5WKpIw" target="_blank">
+                                            <span class="icon">▶️</span> Cryptography For Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=NuyzuNBFWxQ" target="_blank">
+                                            <span class="icon">▶️</span> Public Key Cryptography - Computerphile
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=GSIDS_lvRv4" target="_blank">
+                                            <span class="icon">▶️</span> Encryption and HTTPS
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=O4xNJsjtN6E" target="_blank">
+                                            <span class="icon">▶️</span> Blockchain Technology Explained
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="game-dev">
+                    <div class="topics-grid">
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Unity Game Development">
+                            <div class="topic-header">
+                                <h3>Unity Game Development</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn to create games using Unity, one of the most popular game development platforms for 2D and 3D games.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=gB1F9G0JXOo" target="_blank">
+                                            <span class="icon">▶️</span> Unity Tutorial for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=pwZpJzpE2lQ" target="_blank">
+                                            <span class="icon">▶️</span> How to Make a 2D Game in Unity
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=n0GQL5JgJcY" target="_blank">
+                                            <span class="icon">▶️</span> Unity 3D Game Development Tutorial
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=E6A4WvsDeLE" target="_blank">
+                                            <span class="icon">▶️</span> C# for Unity Game Development
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Unreal Engine">
+                            <div class="topic-header">
+                                <h3>Unreal Engine</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Master Unreal Engine to create high-quality, visually stunning games with advanced graphics and physics.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=QJpfLkEsoek" target="_blank">
+                                            <span class="icon">▶️</span> Unreal Engine 5 Beginner Tutorial
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=k-zMkzmduqI" target="_blank">
+                                            <span class="icon">▶️</span> Unreal Engine 5 Crash Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=LsNW4FPHuZE" target="_blank">
+                                            <span class="icon">▶️</span> Blueprint Visual Scripting in Unreal Engine
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=gQmiqmxJMtA" target="_blank">
+                                            <span class="icon">▶️</span> C++ for Unreal Engine Game Development
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1509967416639-3354b4e1e5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Game Design">
+                            <div class="topic-header">
+                                <h3>Game Design Principles</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Understand the fundamentals of game design, including mechanics, dynamics, aesthetics, and player psychology.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=zQvWMdWhFCc" target="_blank">
+                                            <span class="icon">▶️</span> Game Design Document - Full Course
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=Falm0H7VEiQ" target="_blank">
+                                            <span class="icon">▶️</span> Game Design Principles - What Makes Games Fun
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=G8AT01tuyrk" target="_blank">
+                                            <span class="icon">▶️</span> Level Design in Games
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=NU29QKag8a0" target="_blank">
+                                            <span class="icon">▶️</span> Game Balancing Techniques
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="ui-ux">
+                    <div class="topics-grid">
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="UI Design">
+                            <div class="topic-header">
+                                <h3>UI Design Fundamentals</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn the principles of user interface design, including layout, typography, color theory, and visual hierarchy.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=c9Wg6Cb_YlU" target="_blank">
+                                            <span class="icon">▶️</span> UI Design Tutorial for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=tRpoI6vkqLs" target="_blank">
+                                            <span class="icon">▶️</span> Learn UI Design Fundamentals
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=3dHNOWTI7H8" target="_blank">
+                                            <span class="icon">▶️</span> Color Theory for Designers
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=_UAuYMnWIvs" target="_blank">
+                                            <span class="icon">▶️</span> Typography in UI Design
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="UX Design">
+                            <div class="topic-header">
+                                <h3>UX Design Process</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Master the user experience design process, including research, wireframing, prototyping, and usability testing.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=SRec90j6lTY" target="_blank">
+                                            <span class="icon">▶️</span> UX Design Course - User Experience Design
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=AxmA7wBTwpA" target="_blank">
+                                            <span class="icon">▶️</span> User Research Methods in UX Design
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=2M6dJ2Uynhg" target="_blank">
+                                            <span class="icon">▶️</span> Wireframing and Prototyping Tutorial
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=0YL0xoSmyZI" target="_blank">
+                                            <span class="icon">▶️</span> Usability Testing Explained
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="topic-card card-3d">
+                            <img class="topic-image" src="https://images.unsplash.com/photo-1509967416639-3354b4e1e5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Design Tools">
+                            <div class="topic-header">
+                                <h3>Design Tools</h3>
+                            </div>
+                            <div class="topic-body">
+                                <p>Learn to use industry-standard design tools like Figma, Adobe XD, and Sketch for UI/UX design projects.</p>
+                                <div class="video-list">
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=FTFaQWZBqQ8" target="_blank">
+                                            <span class="icon">▶️</span> Figma Tutorial for Beginners
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=3rQ-eTmWah0" target="_blank">
+                                            <span class="icon">▶️</span> Adobe XD Course - Web Design
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=ilcwjXTqyNM" target="_blank">
+                                            <span class="icon">▶️</span> Sketch App Tutorial for UI Design
+                                        </a>
+                                    </div>
+                                    <div class="video-item">
+                                        <a href="https://www.youtube.com/watch?v=cCNLD5IZY34" target="_blank">
+                                            <span class="icon">▶️</span> Prototyping Interactive Designs
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="resources-section" id="resources">
+        <div class="container">
+            <h2 class="section-title">Additional Resources</h2>
+            
+            <div class="resources-grid">
+                <div class="resource-card floating-element">
+                    <img src="https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=60&q=60" alt="Documentation">
+                    <h3>Documentation</h3>
+                    <p>Access comprehensive documentation for various programming languages, frameworks, and tools.</p>
+                    <a href="https://developer.mozilla.org/en-US/" target="_blank">MDN Web Docs <span class="icon">→</span></a>
+                </div>
+                
+                <div class="resource-card floating-element">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=60&q=60" alt="Practice Platforms">
+                    <h3>Practice Platforms</h3>
+                    <p>Improve your coding skills through interactive challenges and exercises.</p>
+                    <a href="https://www.hackerrank.com/" target="_blank">HackerRank <span class="icon">→</span></a>
+                </div>
+                
+                <div class="resource-card floating-element">
+                    <img src="https://images.unsplash.com/photo-1509967416639-3354b4e1e5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=60&q=60" alt="Online Courses">
+                    <h3>Online Courses</h3>
+                    <p>Enroll in structured courses taught by industry experts.</p>
+                    <a href="https://www.coursera.org/" target="_blank">Coursera <span class="icon">→</span></a>
+                </div>
+                
+                <div class="resource-card floating-element">
+                    <img src="https://images.unsplash.com/photo-1516321310764-8a7b1e7b69f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=60&q=60" alt="Community Forums">
+                    <h3>Community Forums</h3>
+                    <p>Connect with other developers, ask questions, and share knowledge.</p>
+                    <a href="https://stackoverflow.com/" target="_blank">Stack Overflow <span class="icon">→</span></a>
+                </div>
+                
+                <div class="resource-card floating-element">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&auto=format&fit=crop&w=60&q=60" alt="E-Books">
+                    <h3>E-Books</h3>
+                    <p>Access free and paid programming books covering various topics.</p>
+                    <a href="https://www.oreilly.com/" target="_blank">O'Reilly Media <span class="icon">→</span></a>
+                </div>
+                
+                <div class="resource-card floating-element">
+                    <img src="https://images.unsplash.com/photo-1509967416639-3354b4e1e5f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=60&q=60" alt="Coding Bootcamps">
+                    <h3>Coding Bootcamps</h3>
+                    <p>Intensive, immersive training programs to accelerate your learning.</p>
+                    <a href="https://www.codecademy.com/" target="_blank">Codecademy <span class="icon">→</span></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h4>About Us</h4>
+                    <ul>
+                        <li><a href="#">Our Mission</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Learning Paths</h4>
+                    <ul>
+                        <li><a href="#programming">Programming</a></li>
+                        <li><a href="#ai-ml">AI & ML</a></li>
+                        <li><a href="#web-dev">Web Development</a></li>
+                        <li><a href="#cybersecurity">Cybersecurity</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">Copyright</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 CodeVerse Academy. All rights reserved.
+                <span class="creator">Created by Soniya Malakar</span>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabs = document.querySelectorAll('.tab');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Enhanced 3D effect for cards
+            const cards = document.querySelectorAll('.card-3d');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const angleX = (y - centerY) / 15;
+                    const angleY = (centerX - x) / 15;
+                    
+                    this.style.transform = `perspective(1200px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'perspective(1200px) rotateX(0) rotateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
